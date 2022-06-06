@@ -1,26 +1,3 @@
-<div class="load-more-container">
-<div class="load-more" on:click={() => handleDislike()}>
-  <p>Cargar mas perrxs 🥵</p>
-</div>
-</div>
-<div class="sex">
-
-
-{#each $currentDogs as dog}
-<div class="dog-viewer" style:background-image={`url(${dog.url})`}>
-  <div class="body">
-    <h1>{dog.name} {dog.age}</h1>
-    <p>{dog.description}</p>
-    <div class="buttons">
-      <button class="like" on:click={() => handleLike(dog)}>
-      🔥
-      </button>
-    </div>
-  </div>
-</div>
-{/each}
-</div>
-
 <script>
   import { onMount } from 'svelte';
   import { faker } from '@faker-js/faker';
@@ -44,33 +21,32 @@
 
   const cursedMessage = () => {
     const randomMessages = [
-        "Tengo fruta 🍁 a 8k el g 🥵",
-        "busco 🍇 finoli",
-        "solo amistad 🥵",
-        "busco amigos",
-        "discreto C/L",
-        "🐻🧸 s/l",
-      ]
-      if(Math.random() < 0.6){
-        return randomMessages[(Math.random() * randomMessages.length) | 0]
-      }
-      else {
-        return faker.lorem.sentence(10);
-      }
-  }
+      'Tengo fruta 🍁 a 8k el g 🥵',
+      'busco 🍇 finoli',
+      'solo amistad 🥵',
+      'busco amigos',
+      'discreto C/L',
+      '🐻🧸 s/l',
+    ];
+    if (Math.random() < 0.6) {
+      return randomMessages[(Math.random() * randomMessages.length) | 0];
+    } else {
+      return faker.lorem.sentence(10);
+    }
+  };
 
   const replaceCurrDogs = async () => {
     const newCurrentDogs = [];
     const dogURLs = await getDogImgURLs();
-    for(var i = 0; i < 9; i++){
-      const dog = {}
+    for (var i = 0; i < 9; i++) {
+      const dog = {};
       dog.name = faker.name.firstName();
       dog.age = faker.datatype.number({ min: 18, max: 32 });
-      dog.description = cursedMessage()
+      dog.description = cursedMessage();
       dog.url = dogURLs[i];
-      newCurrentDogs.push(dog)
+      newCurrentDogs.push(dog);
     }
-    $currentDogs = newCurrentDogs
+    $currentDogs = newCurrentDogs;
   };
 
   const handleDislike = () => {
@@ -78,19 +54,20 @@
   };
 
   const handleLike = async (dog) => {
-    $matches.push({...dog, chat: []});
+    $matches.push({ ...dog, chat: [] });
     const newDogs = [];
-    for(const currentDog of $currentDogs){
-      if(dog.name !== currentDog.name){
-        newDogs.push(currentDog)
-      }
-      else {
+    for (const currentDog of $currentDogs) {
+      if (dog.name !== currentDog.name) {
+        newDogs.push(currentDog);
+      } else {
         dog.name = faker.name.firstName();
         dog.age = faker.datatype.number({ min: 18, max: 32 });
         dog.description = cursedMessage();
-        dog.url = "";
-        getDogImgURL().then(url => dog.url = url).then(() => $currentDogs = $currentDogs)
-        newDogs.push(dog)
+        dog.url = '';
+        getDogImgURL()
+          .then((url) => (dog.url = url))
+          .then(() => ($currentDogs = $currentDogs));
+        newDogs.push(dog);
       }
     }
     $currentDogs = newDogs;
@@ -102,6 +79,25 @@
     }
   });
 </script>
+
+<div class="load-more-container">
+  <div class="load-more" on:click={() => handleDislike()}>
+    <p>Cargar mas perrxs 🥵</p>
+  </div>
+</div>
+<div class="dog-container">
+  {#each $currentDogs as dog}
+    <div class="dog-viewer" style:background-image={`url(${dog.url})`}>
+      <div class="body">
+        <h1>{dog.name} {dog.age}</h1>
+        <p>{dog.description}</p>
+        <div class="buttons">
+          <button class="like" on:click={() => handleLike(dog)}> 🔥 </button>
+        </div>
+      </div>
+    </div>
+  {/each}
+</div>
 
 <style>
   .load-more-container {
@@ -120,7 +116,7 @@
     width: 50%;
     margin-bottom: 20px;
   }
-  .sex {
+  .dog-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2em;
