@@ -159,6 +159,7 @@
     position: absolute;
     bottom: 0;
     background-image: linear-gradient(to bottom, transparent, black);
+    z-index: 1;
   }
   .buttons {
     display: flex;
@@ -194,5 +195,7 @@
     font-weight: bolder;
     color: #2ecc71;
     text-shadow: 2px 2px 8px black;
+    z-index: 2;
+    position: absolute;
   }
 </style>
