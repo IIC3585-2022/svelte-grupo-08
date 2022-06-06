@@ -36,6 +36,7 @@
     overflow: hidden;
     overflow-y: auto;
     flex-direction: column;
+    background-color: white;
   }
   .message {
     padding: 0.5rem;

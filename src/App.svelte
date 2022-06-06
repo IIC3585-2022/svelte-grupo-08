@@ -28,7 +28,7 @@
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
     width: 100vw;
-    background-color: #f0f2f4;
+    background-color: #1F1F20;
     overflow: auto;
   }
   #content {

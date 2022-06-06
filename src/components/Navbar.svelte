@@ -11,7 +11,7 @@
     <h1>dogrindr</h1>
   </a>
     <a href="#/matches" class="profile-button">
-    <span class="nav-button"> My Matches </span>
+    <span class="nav-button"> Chat </span>
   </a>
 </nav>
 
@@ -32,7 +32,7 @@
     justify-content: center;
   }
   .profile-button {
-    color: white;
+    color: black;
     text-decoration: none;
     font-weight: bold;
     padding: 0 1rem;
@@ -40,7 +40,7 @@
   }
   .main-title {
     margin: auto;
-    color: white;
+    color: black;
     text-decoration: none;
     display: flex;
     align-items: center;

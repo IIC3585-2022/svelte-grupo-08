@@ -26,6 +26,7 @@
     overflow: hidden;
     overflow-y: auto;
     text-decoration: none;
+    background-color: white;
   }
   .match {
     height: 60px;
@@ -40,8 +41,7 @@
     background-color: rgba(0, 0, 0, 0.05);
   }
   .match:hover {
-    background-color: white;
-    color: gray;
+    background-color: gray;
   }
   .match .picture {
     border-radius: 50%;
