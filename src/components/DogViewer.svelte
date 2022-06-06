@@ -89,7 +89,7 @@
         dog.age = faker.datatype.number({ min: 18, max: 32 });
         dog.description = cursedMessage();
         dog.url = "";
-        dog.url = await getDogImgURL();
+        getDogImgURL().then(url => dog.url = url).then(() => $currentDogs = $currentDogs)
         newDogs.push(dog)
       }
     }
