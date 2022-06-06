@@ -1,19 +1,18 @@
 <div class="load-more-container">
-<div class="load-more" on:click={() => handleDislike()} bind:this={dislikeButton}>
+<div class="load-more" on:click={() => handleDislike()}>
   <p>Cargar mas perrxs 🥵</p>
 </div>
 </div>
 <div class="sex">
 
 
-{#each $currentDogs as currentDog}
-<div class="dog-viewer" style:background-image={`url(${currentDog.url})`}>
-  <!-- <div class="match-overlay" style:visibility={showOverlay? 'visible' : 'hidden'}>It's a Match!</div> -->
+{#each $currentDogs as dog}
+<div class="dog-viewer" style:background-image={`url(${dog.url})`}>
   <div class="body">
-    <h1>{currentDog.name} {currentDog.age}</h1>
-    <p>{currentDog.description}</p>
+    <h1>{dog.name} {dog.age}</h1>
+    <p>{dog.description}</p>
     <div class="buttons">
-      <button class="like" on:click={() => handleLike(currentDog)} bind:this={likeButton}>
+      <button class="like" on:click={() => handleLike(dog)}>
       🔥
       </button>
     </div>
@@ -26,10 +25,6 @@
   import { onMount } from 'svelte';
   import { faker } from '@faker-js/faker';
   import { currentDogs, matches } from '../stores.js';
-
-  let showOverlay = false;
-  let likeButton;
-  let dislikeButton;
 
   const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random';
 
@@ -65,22 +60,16 @@
   }
 
   const replaceCurrDogs = async () => {
-    // likeButton.disabled = true;
-    // dislikeButton.disabled = true;
     const newCurrentDogs = [];
     const dogURLs = await getDogImgURLs();
     for(var i = 0; i < 9; i++){
-      const currentDog = {}
-      currentDog.name = faker.name.firstName();
-      currentDog.age = faker.datatype.number({ min: 18, max: 32 });
-      currentDog.description = cursedMessage()
-
-      currentDog.url = dogURLs[i];
-      // likeButton.disabled = false;
-      // dislikeButton.disabled = false;
-      newCurrentDogs.push(currentDog)
+      const dog = {}
+      dog.name = faker.name.firstName();
+      dog.age = faker.datatype.number({ min: 18, max: 32 });
+      dog.description = cursedMessage()
+      dog.url = dogURLs[i];
+      newCurrentDogs.push(dog)
     }
-    console.log('ahora sera', newCurrentDogs)
     $currentDogs = newCurrentDogs
   };
 
@@ -88,25 +77,23 @@
     replaceCurrDogs();
   };
 
-  const handleLike = async (currentDog) => {
-    $matches.push({...currentDog, chat: []});
-    showOverlay = true;
+  const handleLike = async (dog) => {
+    $matches.push({...dog, chat: []});
     const newDogs = [];
-    for(const dog of $currentDogs){
+    for(const currentDog of $currentDogs){
       if(dog.name !== currentDog.name){
-        newDogs.push(dog)
+        newDogs.push(currentDog)
       }
       else {
-        currentDog.name = faker.name.firstName();
-        currentDog.age = faker.datatype.number({ min: 18, max: 32 });
-        currentDog.description = cursedMessage();
-        currentDog.url = "";
-        currentDog.url = await getDogImgURL();
-        newDogs.push(currentDog)
+        dog.name = faker.name.firstName();
+        dog.age = faker.datatype.number({ min: 18, max: 32 });
+        dog.description = cursedMessage();
+        dog.url = "";
+        dog.url = await getDogImgURL();
+        newDogs.push(dog)
       }
     }
     $currentDogs = newDogs;
-    setTimeout(()=>showOverlay=false, 600);
   };
 
   onMount(() => {
@@ -183,19 +170,5 @@
   }
   button:hover {
     transform: scale(1.1);
-  }
-  .match-overlay {
-    background-color: rgba(0, 0, 0, 0.25);
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 72px;
-    font-weight: bolder;
-    color: #2ecc71;
-    text-shadow: 2px 2px 8px black;
-    z-index: 2;
-    position: absolute;
   }
 </style>

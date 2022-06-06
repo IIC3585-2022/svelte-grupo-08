@@ -8,7 +8,7 @@
     </a>
     {/each}
   {:else}
-    <h1>No Matches 😔</h1>
+    <h1>No Chats 😔</h1>
   {/if}
 </div>
 
